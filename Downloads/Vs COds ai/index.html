@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en" class="dark h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-browser-title">NEXUS ELECTRONICS — Premium Satellite & TV Systems</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        black: '#09090b',
+                        dark: {
+                            50: '#18181b',
+                            100: '#27272a',
+                            200: '#3f3f46',
+                            300: '#52525b',
+                            400: '#71717a',
+                        },
+                        accent: '#ffffff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Font Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #09090b;
+            color: #f4f4f5;
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3f3f46;
+        }
+
+        /* Subtle Glow Effects */
+        .glow-sm {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+        }
+        .glow-accent {
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+        }
+        
+        .pulse-dot {
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            animation: pulse-green 2s infinite;
+        }
+        .pulse-dot-red {
+            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            animation: pulse-red 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+        @keyframes pulse-red {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        /* Glass Overlay */
+        .glass-panel {
+            background: rgba(24, 24, 27, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Line Clamp Utilities */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="min-h-full flex flex-col bg-black text-zinc-100 antialiased selection:bg-white selection:text-black">
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div id="announcement-bar" class="bg-zinc-900 border-b border-zinc-800/60 text-xs py-2 px-4 text-center flex items-center justify-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span id="announcement-text" class="text-zinc-300 font-medium">Authorized Boutique — Premium Satellite Receivers & High-Speed IPTV Subscriptions</span>
+    </div>
+
+    <!-- MAIN HEADER NAVIGATION -->
+    <header class="sticky top-0 z-40 bg-black/90 backdrop-blur-md border-b border-zinc-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            
+            <!-- Brand Logo & Store Status Indicator -->
+            <div class="flex items-center gap-4">
+                <a href="#" onclick="switchTab('home')" class="flex items-center gap-2 group">
+                    <div class="w-9 h-9 rounded-lg bg-white text-black font-extrabold flex items-center justify-center text-xl tracking-tighter group-hover:scale-105 transition-transform">
+                        NX
+                    </div>
+                    <div class="flex flex-col">
+                        <span id="header-store-name" class="text-base font-bold tracking-wider text-white uppercase leading-none">NEXUS</span>
+                        <span class="text-[10px] tracking-widest text-zinc-400 uppercase leading-tight">BOUTIQUE</span>
+                    </div>
+                </a>
+
+                <!-- Store Open/Closed Badge -->
+                <div id="header-store-badge" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-emerald-950/40 border-emerald-800/50 text-emerald-400">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 pulse-dot"></span>
+                    <span id="header-store-status-text">STORE OPEN</span>
+                </div>
+            </div>
+
+            <!-- Public Navigation Links -->
+            <nav id="public-nav-links" class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#" onclick="switchTab('home')" class="nav-link text-white hover:text-white transition-colors py-1" data-tab="home">Home</a>
+                <a href="#" onclick="switchTab('catalog')" class="nav-link text-zinc-400 hover:text-white transition-colors py-1" data-tab="catalog">All Products</a>
+                
+                <!-- Category Dropdown -->
+                <div class="relative group py-1">
+                    <button class="flex items-center gap-1 text-zinc-400 hover:text-white transition-colors">
+                        <span>Categories</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute top-full left-0 w-56 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div class="p-2 rounded-xl bg-zinc-900 border border-zinc-800 shadow-2xl flex flex-col gap-1" id="nav-category-dropdown">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <a href="#" onclick="switchTab('contact')" class="nav-link text-zinc-400 hover:text-white transition-colors py-1" data-tab="contact">Contact</a>
+            </nav>
+
+            <!-- Actions Right Side -->
+            <div class="flex items-center gap-3">
+                <!-- Search Button -->
+                <button onclick="toggleSearchModal()" class="p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors" title="Search Products">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
+
+                <!-- WhatsApp Quick Launcher -->
+                <a id="header-whatsapp-btn" href="#" target="_blank" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-800 bg-zinc-900 hover:bg-zinc-800 text-xs font-medium text-emerald-400 hover:border-emerald-800/50 transition-all">
+                    <i data-lucide="message-square" class="w-4 h-4 text-emerald-500"></i>
+                    <span>Direct Chat</span>
+                </a>
+
+                <!-- Admin Dashboard Toggle Button -->
+                <button onclick="tryOpenAdminModal()" id="admin-mode-toggle-btn" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-700 bg-white text-black hover:bg-zinc-200 text-xs font-bold transition-all shadow-sm">
+                    <i data-lucide="shield" class="w-4 h-4"></i>
+                    <span id="admin-btn-text">Admin Panel</span>
+                </button>
+
+                <!-- Mobile Navigation Trigger -->
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-zinc-400 hover:text-white">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden border-b border-zinc-800 bg-zinc-950 px-4 py-4 space-y-3">
+            <div class="flex items-center justify-between pb-2 border-b border-zinc-800">
+                <span class="text-xs text-zinc-400 uppercase tracking-wider">Navigation</span>
+                <div id="mobile-store-badge" class="flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-medium border bg-emerald-950/40 border-emerald-800/50 text-emerald-400">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    <span id="mobile-store-status-text">OPEN</span>
+                </div>
+            </div>
+            <a href="#" onclick="switchTab('home'); toggleMobileMenu()" class="block text-sm font-medium text-zinc-200 py-1">Home</a>
+            <a href="#" onclick="switchTab('catalog'); toggleMobileMenu()" class="block text-sm font-medium text-zinc-200 py-1">All Products</a>
+            <div class="space-y-1 pl-3 border-l border-zinc-800">
+                <span class="text-xs font-semibold text-zinc-500">Categories</span>
+                <div id="mobile-nav-categories" class="space-y-1 pt-1">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+            <a href="#" onclick="switchTab('contact'); toggleMobileMenu()" class="block text-sm font-medium text-zinc-200 py-1">Contact Boutique</a>
+        </div>
+    </header>
+
+    <!-- STORE CLOSED OVERLAY SCREEN -->
+    <div id="store-closed-overlay" class="hidden fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-center">
+        <div class="w-20 h-20 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center mb-6 shadow-2xl relative">
+            <i data-lucide="lock" class="w-10 h-10 text-zinc-400"></i>
+            <span class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 pulse-dot-red"></span>
+        </div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-rose-950/60 border border-rose-800/50 text-rose-400 mb-4">
+            <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
+            <span>STORE TEMPORARILY CLOSED</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3" id="closed-screen-title">Boutique Ordering Suspended</h1>
+        <p class="text-zinc-400 max-w-md text-sm leading-relaxed mb-6" id="closed-screen-msg">
+            Our physical store and WhatsApp order processing system are currently closed for maintenance or stock intake.
+        </p>
+        <div class="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 max-w-sm w-full mb-8">
+            <span class="text-xs text-zinc-500 block uppercase tracking-wider mb-1">Expected Reopening</span>
+            <span class="text-sm font-medium text-zinc-200" id="closed-screen-reopen">Please check back during regular business hours.</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <button onclick="tryOpenAdminModal()" class="px-5 py-2.5 rounded-lg bg-white text-black font-bold text-xs hover:bg-zinc-200 transition-all flex items-center gap-2">
+                <i data-lucide="shield" class="w-4 h-4"></i>
+                <span>Admin Access Login</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER FOR PUBLIC PAGES -->
+    <main id="public-container" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- TAB: HOME PAGE -->
+        <section id="tab-home" class="space-y-12">
+            
+            <!-- Hero Banner -->
+            <div class="relative rounded-2xl overflow-hidden bg-gradient-to-r from-zinc-900 via-zinc-900 to-black border border-zinc-800/80 p-8 sm:p-12 lg:p-16 flex flex-col justify-center min-h-[380px]">
+                <div class="absolute inset-0 bg-[radial-gradient(#3f3f46_1px,transparent_1px)] [background-size:16px_16px] opacity-20 pointer-events-none"></div>
+                <div class="relative z-10 max-w-2xl space-y-5">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-zinc-800/80 border border-zinc-700/60 text-zinc-300">
+                        <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i>
+                        <span id="hero-announcement-badge">Official Receiver & IPTV Hardware Boutique</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight" id="hero-headline">
+                        ULTIMATE SATELLITE & STREAMING POWER.
+                    </h1>
+                    <p class="text-zinc-400 text-sm sm:text-base leading-relaxed" id="hero-subheadline">
+                        Direct authorization for 4K satellite receivers, high-speed Android TV Boxes, VIP server passes, and official sports access. Fast setup via direct WhatsApp order.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-4 pt-2">
+                        <button onclick="switchTab('catalog')" class="px-6 py-3 rounded-xl bg-white text-black font-bold text-sm hover:bg-zinc-200 transition-all flex items-center gap-2 shadow-lg shadow-white/5">
+                            <span>Browse Catalog</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </button>
+                        <a id="hero-whatsapp-link" href="#" target="_blank" class="px-6 py-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-emerald-400 font-semibold text-sm transition-all flex items-center gap-2">
+                            <i data-lucide="message-square" class="w-4 h-4"></i>
+                            <span>Instant WhatsApp Consultation</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Grid -->
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold tracking-tight text-white">Product Categories</h2>
+                        <p class="text-xs text-zinc-400">Select a category to filter our hardware and subscription services</p>
+                    </div>
+                </div>
+                <div id="home-categories-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+                    <!-- Dynamic Categories -->
+                </div>
+            </div>
+
+            <!-- Featured Products -->
+            <div class="space-y-4 pt-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold tracking-tight text-white">Featured Hardware & Passes</h2>
+                        <p class="text-xs text-zinc-400">Hand-picked top-performing devices and authorized passes</p>
+                    </div>
+                    <button onclick="switchTab('catalog')" class="text-xs font-semibold text-zinc-400 hover:text-white flex items-center gap-1">
+                        <span>View All</span>
+                        <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+                <div id="home-featured-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Dynamic Featured Products -->
+                </div>
+            </div>
+
+            <!-- Store Highlights -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-zinc-800/80">
+                <div class="p-5 rounded-xl bg-zinc-900/50 border border-zinc-800/80 flex items-start gap-4">
+                    <div class="p-2.5 rounded-lg bg-zinc-800 text-white">
+                        <i data-lucide="shield-check" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white">100% Authorized & Tested</h4>
+                        <p class="text-xs text-zinc-400 mt-0.5">Every receiver and pass is pre-tested by our in-store technicians.</p>
+                    </div>
+                </div>
+                <div class="p-5 rounded-xl bg-zinc-900/50 border border-zinc-800/80 flex items-start gap-4">
+                    <div class="p-2.5 rounded-lg bg-zinc-800 text-white">
+                        <i data-lucide="truck" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white">Fast Local Dispatch</h4>
+                        <p class="text-xs text-zinc-400 mt-0.5">Express courier delivery for hardware or instant activation for passes.</p>
+                    </div>
+                </div>
+                <div class="p-5 rounded-xl bg-zinc-900/50 border border-zinc-800/80 flex items-start gap-4">
+                    <div class="p-2.5 rounded-lg bg-zinc-800 text-white">
+                        <i data-lucide="headphones" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-bold text-white">Direct WhatsApp Support</h4>
+                        <p class="text-xs text-zinc-400 mt-0.5">Step-by-step setup assistance for all satellite and Android TV boxes.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- TAB: CATALOG PAGE -->
+        <section id="tab-catalog" class="hidden space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-zinc-800">
+                <div>
+                    <h1 class="text-2xl font-bold text-white tracking-tight">Product Catalog</h1>
+                    <p class="text-xs text-zinc-400">Filter, search, and order via WhatsApp direct dispatch</p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="relative min-w-[200px] flex-1 sm:flex-none">
+                        <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500"></i>
+                        <input type="text" id="catalog-search" oninput="renderCatalog()" placeholder="Search products..." class="w-full bg-zinc-900 border border-zinc-800 rounded-lg pl-9 pr-3 py-1.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-zinc-500">
+                    </div>
+
+                    <select id="catalog-category-filter" onchange="renderCatalog()" class="bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-zinc-500">
+                        <option value="ALL">All Categories</option>
+                    </select>
+
+                    <select id="catalog-sort" onchange="renderCatalog()" class="bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-zinc-500">
+                        <option value="featured">Sort: Featured</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="newest">Newest First</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="catalog-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+
+            <div id="catalog-empty-state" class="hidden text-center py-16 px-4 bg-zinc-900/30 rounded-2xl border border-zinc-800/50">
+                <i data-lucide="package-x" class="w-12 h-12 text-zinc-600 mx-auto mb-3"></i>
+                <h3 class="text-base font-bold text-white">No Products Found</h3>
+                <p class="text-xs text-zinc-400 max-w-sm mx-auto mt-1 mb-4">We couldn't find any products matching your current filters or search terms.</p>
+                <button onclick="resetCatalogFilters()" class="px-4 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-semibold text-white transition-colors">
+                    Reset Catalog Filters
+                </button>
+            </div>
+        </section>
+
+        <!-- TAB: CONTACT PAGE -->
+        <section id="tab-contact" class="hidden max-w-4xl mx-auto space-y-8">
+            <div class="text-center space-y-2">
+                <h1 class="text-3xl font-extrabold text-white tracking-tight">Visit Our Boutique</h1>
+                <p class="text-xs sm:text-sm text-zinc-400">Physical store location, phone numbers, and WhatsApp assistance</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 space-y-6">
+                    <h3 class="text-lg font-bold text-white border-b border-zinc-800 pb-3">Contact Information</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="p-2 rounded-lg bg-zinc-800 text-zinc-300">
+                                <i data-lucide="phone" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-zinc-500 uppercase tracking-wider block">Phone & WhatsApp</span>
+                                <span id="contact-phone-display" class="text-sm font-semibold text-white">+216 98 000 000</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <div class="p-2 rounded-lg bg-zinc-800 text-zinc-300">
+                                <i data-lucide="clock" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-zinc-500 uppercase tracking-wider block">Boutique Hours</span>
+                                <span id="contact-hours-display" class="text-sm font-medium text-zinc-300">Mon - Sat: 09:00 AM - 08:00 PM</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <div class="p-2 rounded-lg bg-zinc-800 text-zinc-300">
+                                <i data-lucide="map-pin" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-zinc-500 uppercase tracking-wider block">Physical Address</span>
+                                <span id="contact-address-display" class="text-sm font-medium text-zinc-300">Central Electronics Market, Suite 104</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a id="contact-whatsapp-btn" href="#" target="_blank" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/20">
+                        <i data-lucide="message-square" class="w-4 h-4"></i>
+                        <span>Start WhatsApp Chat Now</span>
+                    </a>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-white border-b border-zinc-800 pb-3">Important Store Notice</h3>
+                        <p class="text-xs text-zinc-400 leading-relaxed" id="contact-description-display">
+                            We specialize in genuine satellite hardware and authorized streaming servers. All subscriptions are activated directly after payment confirmation via WhatsApp.
+                        </p>
+                    </div>
+
+                    <div class="pt-4 border-t border-zinc-800 flex items-center justify-between text-xs text-zinc-500">
+                        <span id="footer-store-brand">NEXUS Electronics © 2026</span>
+                        <span class="text-emerald-400 flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Verified Business
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ADMIN DASHBOARD CONTAINER -->
+    <div id="admin-container" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 mb-6 border-b border-zinc-800">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-white text-black uppercase tracking-wider">Admin System</span>
+                        <h1 class="text-2xl font-extrabold text-white tracking-tight">Management Dashboard</h1>
+                    </div>
+                    <p class="text-xs text-zinc-400 mt-1">Full control over inventory, store open status, orders, and configuration</p>
+                </div>
+                <button onclick="toggleAdminMode()" class="md:hidden px-3 py-1.5 rounded-lg bg-zinc-800 text-white font-bold text-xs">
+                    Exit Admin
+                </button>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button onclick="toggleAdminMode()" class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-bold transition-all">
+                    <span>Exit Admin Panel</span>
+                </button>
+
+                <div class="flex items-center gap-4 bg-zinc-900 border border-zinc-800 p-2 rounded-xl">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">Global Store Status</span>
+                        <span id="admin-store-status-label" class="text-xs font-extrabold text-emerald-400">OPEN FOR BUSINESS</span>
+                    </div>
+                    <div class="flex items-center bg-black p-1 rounded-lg border border-zinc-800">
+                        <button id="btn-toggle-store-open" onclick="setStoreStatus(true)" class="px-3 py-1 rounded text-xs font-bold transition-all bg-emerald-600 text-white shadow-sm">OPEN</button>
+                        <button id="btn-toggle-store-closed" onclick="setStoreStatus(false)" class="px-3 py-1 rounded text-xs font-bold transition-all text-zinc-400 hover:text-white">CLOSED</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex border-b border-zinc-800 overflow-x-auto scrollbar-none mb-6">
+            <button onclick="switchAdminTab('overview')" class="admin-nav-tab px-4 py-2.5 text-xs font-bold border-b-2 border-white text-white whitespace-nowrap flex items-center gap-2" data-atab="overview">
+                <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Overview
+            </button>
+            <button onclick="switchAdminTab('products')" class="admin-nav-tab px-4 py-2.5 text-xs font-bold border-b-2 border-transparent text-zinc-400 hover:text-white whitespace-nowrap flex items-center gap-2" data-atab="products">
+                <i data-lucide="package" class="w-4 h-4"></i> Products (<span id="admin-count-products">0</span>)
+            </button>
+            <button onclick="switchAdminTab('categories')" class="admin-nav-tab px-4 py-2.5 text-xs font-bold border-b-2 border-transparent text-zinc-400 hover:text-white whitespace-nowrap flex items-center gap-2" data-atab="categories">
+                <i data-lucide="layers" class="w-4 h-4"></i> Categories
+            </button>
+            <button onclick="switchAdminTab('orders')" class="admin-nav-tab px-4 py-2.5 text-xs font-bold border-b-2 border-transparent text-zinc-400 hover:text-white whitespace-nowrap flex items-center gap-2" data-atab="orders">
+                <i data-lucide="shopping-bag" class="w-4 h-4"></i> Orders (<span id="admin-count-orders">0</span>)
+            </button>
+            <button onclick="switchAdminTab('settings')" class="admin-nav-tab px-4 py-2.5 text-xs font-bold border-b-2 border-transparent text-zinc-400 hover:text-white whitespace-nowrap flex items-center gap-2" data-atab="settings">
+                <i data-lucide="settings" class="w-4 h-4"></i> Store Settings
+            </button>
+        </div>
+
+        <!-- ADMIN TAB: OVERVIEW -->
+        <div id="atab-overview" class="space-y-6">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800">
+                    <span class="text-xs text-zinc-400 font-medium block mb-1">Total Products</span>
+                    <span class="text-2xl font-bold text-white" id="stat-total-products">0</span>
+                    <span class="text-[10px] text-zinc-500 block mt-1" id="stat-published-products">0 Published</span>
+                </div>
+                <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800">
+                    <span class="text-xs text-zinc-400 font-medium block mb-1">Total Orders</span>
+                    <span class="text-2xl font-bold text-white" id="stat-total-orders">0</span>
+                    <span class="text-[10px] text-amber-400 block mt-1" id="stat-new-orders">0 Pending Action</span>
+                </div>
+                <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800">
+                    <span class="text-xs text-zinc-400 font-medium block mb-1">Low Stock / Out</span>
+                    <span class="text-2xl font-bold text-rose-400" id="stat-out-stock">0</span>
+                    <span class="text-[10px] text-zinc-500 block mt-1">Requires Restock</span>
+                </div>
+                <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800">
+                    <span class="text-xs text-zinc-400 font-medium block mb-1">Logged Sales Total</span>
+                    <span class="text-2xl font-bold text-emerald-400" id="stat-total-revenue">$0</span>
+                    <span class="text-[10px] text-zinc-500 block mt-1">Confirmed Orders</span>
+                </div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-zinc-900 border border-zinc-800 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-base font-bold text-white">Recent Customer Orders</h3>
+                    <button onclick="switchAdminTab('orders')" class="text-xs text-zinc-400 hover:text-white font-medium">View All Orders →</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-zinc-950 text-zinc-400 uppercase tracking-wider">
+                            <tr>
+                                <th class="p-3 rounded-l-lg">Ref #</th>
+                                <th class="p-3">Customer</th>
+                                <th class="p-3">Product</th>
+                                <th class="p-3">Total</th>
+                                <th class="p-3">Status</th>
+                                <th class="p-3 rounded-r-lg">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-recent-orders-tbody" class="divide-y divide-zinc-800/60 text-zinc-300"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADMIN TAB: PRODUCTS -->
+        <div id="atab-products" class="hidden space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <input type="text" id="admin-product-search" oninput="renderAdminProducts()" placeholder="Filter products by name..." class="bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-1.5 text-xs text-white placeholder-zinc-500 min-w-[220px]">
+                    <select id="admin-product-category-filter" onchange="renderAdminProducts()" class="bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-1.5 text-xs text-white">
+                        <option value="ALL">All Categories</option>
+                    </select>
+                </div>
+                <button onclick="openProductModal()" class="px-4 py-2 rounded-xl bg-white text-black font-bold text-xs hover:bg-zinc-200 transition-all flex items-center gap-2 shadow-md">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Add New Product
+                </button>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-zinc-800 bg-zinc-900">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-zinc-950 text-zinc-400 uppercase tracking-wider">
+                        <tr>
+                            <th class="p-3">Product</th>
+                            <th class="p-3">Category</th>
+                            <th class="p-3">Price</th>
+                            <th class="p-3">Stock / Type</th>
+                            <th class="p-3">Status</th>
+                            <th class="p-3 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-products-tbody" class="divide-y divide-zinc-800/80 text-zinc-300"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ADMIN TAB: CATEGORIES -->
+        <div id="atab-categories" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <h3 class="text-base font-bold text-white">Categories Management</h3>
+                <button onclick="openCategoryModal()" class="px-4 py-2 rounded-xl bg-white text-black font-bold text-xs hover:bg-zinc-200 transition-all flex items-center gap-2">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Add Category
+                </button>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="admin-categories-grid"></div>
+        </div>
+
+        <!-- ADMIN TAB: ORDERS -->
+        <div id="atab-orders" class="hidden space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <select id="admin-order-status-filter" onchange="renderAdminOrders()" class="bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-1.5 text-xs text-white">
+                        <option value="ALL">All Order Statuses</option>
+                        <option value="New">New</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-xl border border-zinc-800 bg-zinc-900">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-zinc-950 text-zinc-400 uppercase tracking-wider">
+                        <tr>
+                            <th class="p-3">Reference</th>
+                            <th class="p-3">Customer Details</th>
+                            <th class="p-3">Order Items</th>
+                            <th class="p-3">Total</th>
+                            <th class="p-3">Status</th>
+                            <th class="p-3">Created</th>
+                            <th class="p-3 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-orders-tbody" class="divide-y divide-zinc-800/80 text-zinc-300"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ADMIN TAB: STORE SETTINGS -->
+        <div id="atab-settings" class="hidden max-w-3xl space-y-6">
+            <form id="store-settings-form" onsubmit="saveStoreSettings(event)" class="space-y-6 p-6 rounded-2xl bg-zinc-900 border border-zinc-800">
+                <h3 class="text-base font-bold text-white border-b border-zinc-800 pb-3">Store & WhatsApp Configuration</h3>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-zinc-400 mb-1">Store Name</label>
+                        <input type="text" id="setting-store-name" required class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-zinc-400 mb-1">Store Currency Symbol</label>
+                        <input type="text" id="setting-currency" required class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-white" placeholder="USD ($), EUR (€), TND, etc.">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-semibold text-zinc-400 mb-1">WhatsApp Business Phone Number (International Format)</label>
+                        <input type="text" id="setting-whatsapp-number" required class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-white" placeholder="+21698000000">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-semibold text-zinc-400 mb-1">Physical Store Address</label>
+                        <input type="text" id="setting-address" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-zinc-400 mb-1">Business Hours</label>
+                        <input type="text" id="setting-hours" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-white">
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-zinc-800 flex justify-end">
+                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-white text-black font-bold text-xs hover:bg-zinc-200 transition-all shadow-md">
+                        Save Configuration
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADMIN LOGIN MODAL -->
+    <div id="modal-admin-login" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="relative w-full max-w-sm bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-2xl space-y-4 text-center">
+            <div class="w-12 h-12 rounded-xl bg-zinc-950 border border-zinc-800 text-white flex items-center justify-center mx-auto mb-2">
+                <i data-lucide="shield-check" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-base font-bold text-white">Admin Authentication</h3>
+            <p class="text-xs text-zinc-400">Enter your secure administrator password to open the dashboard.</p>
+            
+            <form onsubmit="verifyAdminPassword(event)" class="space-y-3 pt-2">
+                <input type="password" id="admin-pass-input" required placeholder="Enter password (default: )" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-white text-center tracking-widest focus:outline-none focus:border-zinc-500">
+                <div class="flex gap-2 pt-1">
+                    <button type="button" onclick="closeAdminLoginModal()" class="flex-1 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-semibold text-white">Cancel</button>
+                    <button type="submit" class="flex-1 py-2 rounded-lg bg-white hover:bg-zinc-200 text-xs font-bold text-black">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: PRODUCT DETAIL -->
+    <div id="modal-product-detail" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+        <div class="relative w-full max-w-3xl bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl my-8">
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 p-2 rounded-full bg-zinc-950/80 text-zinc-400 hover:text-white border border-zinc-800 transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="grid grid-cols-1 md:grid-cols-2">
+                <div class="p-6 bg-zinc-950 border-r border-zinc-800/80 flex flex-col justify-between">
+                    <div class="relative aspect-square rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 mb-4">
+                        <img id="detail-image-main" src="" alt="Product Image" class="w-full h-full object-cover">
+                        <span id="detail-badge-type" class="absolute top-3 left-3 px-2 py-1 rounded text-[10px] font-extrabold uppercase tracking-wider bg-white text-black">SATELLITE</span>
+                    </div>
+                </div>
+
+                <div class="p-6 flex flex-col justify-between space-y-6">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span id="detail-category-name" class="text-xs font-semibold text-zinc-400">Category Name</span>
+                            <span id="detail-stock-badge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-800/50">In Stock</span>
+                        </div>
+                        <h2 id="detail-title" class="text-xl font-bold text-white leading-tight">Product Title</h2>
+                        
+                        <div class="flex items-baseline gap-2">
+                            <span id="detail-price" class="text-2xl font-black text-white">$0.00</span>
+                        </div>
+
+                        <p id="detail-description" class="text-xs text-zinc-400 leading-relaxed max-h-24 overflow-y-auto">Description</p>
+                        
+                        <div id="detail-duration-container" class="space-y-1.5 hidden pt-2">
+                            <label class="text-xs font-semibold text-zinc-300 block">Subscription Duration</label>
+                            <div class="grid grid-cols-3 gap-2" id="detail-duration-options"></div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-zinc-800 space-y-3">
+                        <div id="whatsapp-order-form-fields" class="space-y-2">
+                            <div class="grid grid-cols-2 gap-2">
+                                <input type="text" id="order-cust-name" placeholder="Full Name *" required class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder-zinc-500">
+                                <input type="tel" id="order-cust-phone" placeholder="Phone Number *" required class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder-zinc-500">
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class="flex items-center border border-zinc-800 rounded-lg bg-zinc-950 px-2 py-1">
+                                    <span class="text-[10px] text-zinc-500 mr-2">Qty:</span>
+                                    <button type="button" onclick="adjustOrderQty(-1)" class="text-zinc-400 hover:text-white font-bold px-1 text-xs">-</button>
+                                    <span id="order-qty-display" class="px-2 text-xs font-bold text-white">1</span>
+                                    <button type="button" onclick="adjustOrderQty(1)" class="text-zinc-400 hover:text-white font-bold px-1 text-xs">+</button>
+                                </div>
+                                <input type="text" id="order-cust-notes" placeholder="Notes (Optional)" class="flex-1 bg-zinc-950 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-xs text-white placeholder-zinc-500">
+                            </div>
+                        </div>
+
+                        <button onclick="executeWhatsAppOrder()" class="w-full py-3 rounded-xl bg-white hover:bg-zinc-200 text-black font-extrabold text-xs transition-all flex items-center justify-center gap-2 shadow-lg shadow-white/10">
+                            <i data-lucide="message-square" class="w-4 h-4 text-emerald-600"></i>
+                            <span>BUY VIA WHATSAPP NOW</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ADMIN PRODUCT EDITOR -->
+    <div id="modal-admin-product" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+        <div class="relative w-full max-w-2xl bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-2xl my-8">
+            <button onclick="closeAdminProductModal()" class="absolute top-4 right-4 p-2 text-zinc-400 hover:text-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <h3 id="admin-product-modal-title" class="text-lg font-bold text-white mb-4">Add New Product</h3>
+
+            <form id="admin-product-form" onsubmit="saveAdminProduct(event)" class="space-y-4 text-xs">
+                <input type="hidden" id="edit-prod-id">
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-zinc-400 mb-1">Product Title *</label>
+                        <input type="text" id="edit-prod-name" required class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-zinc-400 mb-1">Category *</label>
+                        <select id="edit-prod-category" required class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white"></select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block font-semibold text-zinc-400 mb-1">Price *</label>
+                        <input type="number" step="0.01" id="edit-prod-price" required class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-zinc-400 mb-1">Previous Price</label>
+                        <input type="number" step="0.01" id="edit-prod-prev-price" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-zinc-400 mb-1">Stock Quantity</label>
+                        <input type="number" id="edit-prod-stock" value="10" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white">
+                    </div>
+                </div>
+
+                <div class="space-y-2 p-3 rounded-xl bg-zinc-950 border border-zinc-800">
+                    <label class="block font-semibold text-zinc-300">Product Image (Choose from PC/Phone or URL)</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                            <span class="text-[10px] text-zinc-500 block mb-1">Option 1: Upload Image</span>
+                            <input type="file" id="edit-prod-file" accept="image/*" onchange="handleImageFileUpload(event)" class="w-full text-[11px] text-zinc-400 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-zinc-800 file:text-white hover:file:bg-zinc-700 cursor-pointer">
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-zinc-500 block mb-1">Option 2: Image URL</span>
+                            <input type="url" id="edit-prod-image" class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-2.5 py-1.5 text-white text-xs" placeholder="https://...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-zinc-400 mb-1">Product Type</label>
+                        <select id="edit-prod-type" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white">
+                            <option value="Physical Hardware">Physical Hardware</option>
+                            <option value="Digital Pass / IPTV">Digital Pass / IPTV</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-zinc-400 mb-1">Key Specs</label>
+                        <input type="text" id="edit-prod-specs" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white" placeholder="Resolution:4K, RAM:4GB">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-zinc-400 mb-1">Short Description</label>
+                    <textarea id="edit-prod-desc" rows="2" required class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-white"></textarea>
+                </div>
+
+                <div class="flex items-center gap-6 pt-1">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="edit-prod-published" checked class="rounded border-zinc-800 bg-zinc-950 text-white">
+                        <span class="text-zinc-300 font-medium">Published</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="edit-prod-featured" class="rounded border-zinc-800 bg-zinc-950 text-white">
+                        <span class="text-zinc-300 font-medium">Featured on Home</span>
+                    </label>
+                </div>
+
+                <div class="pt-4 border-t border-zinc-800 flex justify-end gap-2">
+                    <button type="button" onclick="closeAdminProductModal()" class="px-4 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white font-medium">Cancel</button>
+                    <button type="submit" class="px-5 py-2 rounded-lg bg-white text-black font-bold hover:bg-zinc-200">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- QUICK SEARCH MODAL -->
+    <div id="modal-search" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-start justify-center pt-20 px-4">
+        <div class="relative w-full max-w-xl bg-zinc-900 border border-zinc-800 rounded-2xl p-4 shadow-2xl space-y-4">
+            <div class="flex items-center gap-2 border-b border-zinc-800 pb-3">
+                <i data-lucide="search" class="w-5 h-5 text-zinc-400"></i>
+                <input type="text" id="quick-search-input" oninput="handleQuickSearch()" placeholder="Type to search..." class="w-full bg-transparent text-sm text-white focus:outline-none">
+                <button onclick="toggleSearchModal()" class="p-1 text-zinc-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            <div id="quick-search-results" class="max-h-80 overflow-y-auto space-y-2 divide-y divide-zinc-800/60">
+                <p class="text-xs text-zinc-500 text-center py-4">Start typing to see instant results...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION TOAST CONTAINER -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-2 pointer-events-none"></div>
+
+    <!-- JAVASCRIPT APP CORE -->
+    <script>
+        const DEFAULT_CATEGORIES = [
+            { id: 'cat-1', name: 'Satellite Receivers', slug: 'satellite-receivers', icon: 'tv' },
+            { id: 'cat-2', name: 'Android TV Boxes', slug: 'android-tv-boxes', icon: 'box' },
+            { id: 'cat-3', name: 'IPTV Subscriptions', slug: 'iptv-subscriptions', icon: 'zap' },
+            { id: 'cat-4', name: 'Sharing Subscriptions', slug: 'sharing-subscriptions', icon: 'share-2' },
+            { id: 'cat-5', name: 'beIN SPORTS Passes', slug: 'bein-sports', icon: 'trophy' },
+            { id: 'cat-6', name: 'Accessories', slug: 'accessories', icon: 'cpu' }
+        ];
+
+        const DEFAULT_PRODUCTS = [
+            {
+                id: 'prod-101',
+                name: 'Apex 4K Satellite Receiver Pro',
+                categoryId: 'cat-1',
+                price: 129.00,
+                previousPrice: 149.00,
+                type: 'Physical Hardware',
+                stock: 14,
+                isPublished: true,
+                isFeatured: true,
+                image: 'https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=600&q=80',
+                shortDescription: 'Ultra HD 4K Satellite Receiver with DVB-S2X tuner, Built-in WiFi, and Multistream support.',
+                specs: { 'Resolution': '4K UHD 60fps', 'Tuner': 'DVB-S2X' }
+            },
+            {
+                id: 'prod-102',
+                name: 'Android TV Box X-100 Ultra',
+                categoryId: 'cat-2',
+                price: 89.00,
+                previousPrice: 99.00,
+                type: 'Physical Hardware',
+                stock: 22,
+                isPublished: true,
+                isFeatured: true,
+                image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=600&q=80',
+                shortDescription: 'Android 12 Media Player with 4GB RAM, 64GB Storage, AV1 codec decoding.',
+                specs: { 'OS': 'Android 12', 'RAM': '4GB' }
+            }
+        ];
+
+        const DEFAULT_SETTINGS = {
+            storeName: 'NEXUS ELECTRONICS',
+            currency: '$',
+            whatsappNumber: '+21698000000',
+            adminPassword: 'admin123',
+            isOpen: true,
+            address: 'Central Electronics Market, Suite 104',
+            hours: 'Mon - Sat: 09:00 AM - 08:00 PM',
+            heroHeadline: 'ULTIMATE SATELLITE & STREAMING POWER.',
+            heroSubheadline: 'Direct authorization for 4K satellite receivers, high-speed Android TV Boxes, VIP server passes, and official sports access. Fast setup via direct WhatsApp order.',
+            closureMsg: 'Our physical store and WhatsApp order processing system are currently closed for maintenance or stock intake.'
+        };
+
+        const DEFAULT_ORDERS = [
+            {
+                id: 'ord-8801',
+                reference: '#NX-8801',
+                customerName: 'Sami Mansour',
+                customerPhone: '+216 22 111 333',
+                productName: 'Apex 4K Satellite Receiver Pro',
+                variant: 'Default',
+                quantity: 1,
+                unitPrice: 129.00,
+                total: 129.00,
+                status: 'Confirmed',
+                createdAt: '2026-03-28 10:14',
+                notes: 'None'
+            }
+        ];
+
+        let state = {
+            categories: JSON.parse(localStorage.getItem('nexus_categories')) || DEFAULT_CATEGORIES,
+            products: JSON.parse(localStorage.getItem('nexus_products')) || DEFAULT_PRODUCTS,
+            orders: JSON.parse(localStorage.getItem('nexus_orders')) || DEFAULT_ORDERS,
+            settings: JSON.parse(localStorage.getItem('nexus_settings')) || DEFAULT_SETTINGS,
+            activeTab: 'home',
+            isAdmin: false,
+            adminTab: 'overview',
+            selectedProductForDetail: null,
+            orderQty: 1,
+            selectedDuration: null
+        };
+
+        function saveState() {
+            localStorage.setItem('nexus_categories', JSON.stringify(state.categories));
+            localStorage.setItem('nexus_products', JSON.stringify(state.products));
+            localStorage.setItem('nexus_orders', JSON.stringify(state.orders));
+            localStorage.setItem('nexus_settings', JSON.stringify(state.settings));
+            updateStoreAvailabilityUI();
+        }
+
+        function initApp() {
+            lucide.createIcons();
+            updateStoreAvailabilityUI();
+            renderHeaderCategories();
+            renderHomePage();
+            renderCatalog();
+            renderAdminDashboard();
+            populateSettingsForm();
+        }
+
+        function switchTab(tabName) {
+            if (!state.settings.isOpen && tabName !== 'contact' && !state.isAdmin) {
+                document.getElementById('store-closed-overlay').classList.remove('hidden');
+            } else {
+                document.getElementById('store-closed-overlay').classList.add('hidden');
+            }
+
+            state.activeTab = tabName;
+            ['home', 'catalog', 'contact'].forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                if (el) el.classList.toggle('hidden', t !== tabName);
+            });
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (link.dataset.tab === tabName) {
+                    link.classList.add('text-white');
+                    link.classList.remove('text-zinc-400');
+                } else {
+                    link.classList.remove('text-white');
+                    link.classList.add('text-zinc-400');
+                }
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function tryOpenAdminModal() {
+            if (state.isAdmin) {
+                toggleAdminMode();
+            } else {
+                document.getElementById('admin-pass-input').value = '';
+                document.getElementById('modal-admin-login').classList.remove('hidden');
+                document.getElementById('admin-pass-input').focus();
+            }
+        }
+
+        function closeAdminLoginModal() {
+            document.getElementById('modal-admin-login').classList.add('hidden');
+        }
+
+        function verifyAdminPassword(e) {
+            e.preventDefault();
+            const enteredPass = document.getElementById('admin-pass-input').value;
+            const correctPass = state.settings.adminPassword || 'admin123';
+
+            if (enteredPass === correctPass) {
+                closeAdminLoginModal();
+                toggleAdminMode();
+                showToast("Admin access granted successfully!");
+            } else {
+                showToast("Incorrect password! Try again (default: admin123)", "error");
+                document.getElementById('admin-pass-input').value = '';
+            }
+        }
+
+        function toggleAdminMode() {
+            state.isAdmin = !state.isAdmin;
+            const publicContainer = document.getElementById('public-container');
+            const adminContainer = document.getElementById('admin-container');
+            const btnText = document.getElementById('admin-btn-text');
+
+            if (state.isAdmin) {
+                publicContainer.classList.add('hidden');
+                adminContainer.classList.remove('hidden');
+                btnText.textContent = "Exit Admin";
+                document.getElementById('store-closed-overlay').classList.add('hidden');
+                renderAdminDashboard();
+            } else {
+                publicContainer.classList.remove('hidden');
+                adminContainer.classList.add('hidden');
+                btnText.textContent = "Admin Panel";
+                switchTab('home');
+            }
+        }
+
+        function switchAdminTab(tab) {
+            state.adminTab = tab;
+            ['overview', 'products', 'categories', 'orders', 'settings'].forEach(t => {
+                const el = document.getElementById(`atab-${t}`);
+                if (el) el.classList.toggle('hidden', t !== tab);
+            });
+
+            document.querySelectorAll('.admin-nav-tab').forEach(btn => {
+                if (btn.dataset.atab === tab) {
+                    btn.classList.add('border-white', 'text-white');
+                    btn.classList.remove('border-transparent', 'text-zinc-400');
+                } else {
+                    btn.classList.remove('border-white', 'text-white');
+                    btn.classList.add('border-transparent', 'text-zinc-400');
+                }
+            });
+        }
+
+        function updateStoreAvailabilityUI() {
+            const isOpen = state.settings.isOpen;
+            
+            // Update Store Name Dynamically across headers, titles, and footers
+            const currentStoreName = state.settings.storeName || 'NEXUS ELECTRONICS';
+            document.getElementById('header-store-name').textContent = currentStoreName;
+            document.getElementById('page-browser-title').textContent = `${currentStoreName} — Premium Systems`;
+            document.getElementById('footer-store-brand').textContent = `${currentStoreName} © 2026`;
+
+            const statusText = isOpen ? "STORE OPEN" : "STORE CLOSED";
+            document.getElementById('header-store-status-text').textContent = statusText;
+            document.getElementById('mobile-store-status-text').textContent = isOpen ? "OPEN" : "CLOSED";
+
+            const headerBadge = document.getElementById('header-store-badge');
+            if (isOpen) {
+                headerBadge.className = "hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-emerald-950/40 border-emerald-800/50 text-emerald-400";
+            } else {
+                headerBadge.className = "hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border bg-rose-950/40 border-rose-800/50 text-rose-400";
+            }
+
+            const overlay = document.getElementById('store-closed-overlay');
+            if (!isOpen && !state.isAdmin) {
+                overlay.classList.remove('hidden');
+                document.getElementById('closed-screen-msg').textContent = state.settings.closureMsg;
+            } else {
+                overlay.classList.add('hidden');
+            }
+
+            document.getElementById('admin-store-status-label').textContent = isOpen ? "OPEN FOR BUSINESS" : "STORE CLOSED / MAINTENANCE";
+            document.getElementById('admin-store-status-label').className = isOpen ? "text-xs font-extrabold text-emerald-400" : "text-xs font-extrabold text-rose-400";
+
+            const btnOpen = document.getElementById('btn-toggle-store-open');
+            const btnClosed = document.getElementById('btn-toggle-store-closed');
+            if (isOpen) {
+                btnOpen.className = "px-3 py-1 rounded text-xs font-bold transition-all bg-emerald-600 text-white shadow-sm";
+                btnClosed.className = "px-3 py-1 rounded text-xs font-bold transition-all text-zinc-400 hover:text-white";
+            } else {
+                btnOpen.className = "px-3 py-1 rounded text-xs font-bold transition-all text-zinc-400 hover:text-white";
+                btnClosed.className = "px-3 py-1 rounded text-xs font-bold transition-all bg-rose-600 text-white shadow-sm";
+            }
+
+            document.getElementById('contact-phone-display').textContent = state.settings.whatsappNumber;
+            document.getElementById('contact-hours-display').textContent = state.settings.hours;
+            document.getElementById('contact-address-display').textContent = state.settings.address;
+            document.getElementById('contact-description-display').textContent = state.settings.heroSubheadline;
+
+            const waUrl = `https://wa.me/${state.settings.whatsappNumber.replace(/[^0-9]/g, '')}`;
+            document.getElementById('header-whatsapp-btn').href = waUrl;
+            document.getElementById('hero-whatsapp-link').href = waUrl;
+            document.getElementById('contact-whatsapp-btn').href = waUrl;
+
+            document.getElementById('hero-headline').textContent = state.settings.heroHeadline;
+            document.getElementById('hero-subheadline').textContent = state.settings.heroSubheadline;
+        }
+
+        function setStoreStatus(isOpen) {
+            state.settings.isOpen = isOpen;
+            saveState();
+            showToast(isOpen ? "Store is now OPEN publicly." : "Store is now CLOSED publicly.");
+        }
+
+        function renderHeaderCategories() {
+            const dropdown = document.getElementById('nav-category-dropdown');
+            const mobileContainer = document.getElementById('mobile-nav-categories');
+            
+            dropdown.innerHTML = '';
+            mobileContainer.innerHTML = '';
+
+            state.categories.forEach(cat => {
+                dropdown.innerHTML += `
+                    <a href="#" onclick="filterCatalogByCategory('${cat.id}')" class="px-3 py-2 rounded-lg hover:bg-zinc-800 text-xs font-medium text-zinc-300 hover:text-white transition-colors flex items-center gap-2">
+                        <i data-lucide="${cat.icon || 'tag'}" class="w-3.5 h-3.5 text-zinc-400"></i>
+                        <span>${cat.name}</span>
+                    </a>
+                `;
+                mobileContainer.innerHTML += `
+                    <a href="#" onclick="filterCatalogByCategory('${cat.id}'); toggleMobileMenu()" class="block text-xs text-zinc-400 hover:text-white py-1">${cat.name}</a>
+                `;
+            });
+            lucide.createIcons();
+        }
+
+        function renderHomePage() {
+            const catGrid = document.getElementById('home-categories-grid');
+            catGrid.innerHTML = '';
+            state.categories.forEach(cat => {
+                catGrid.innerHTML += `
+                    <div onclick="filterCatalogByCategory('${cat.id}')" class="p-4 rounded-xl bg-zinc-900 border border-zinc-800/80 hover:border-zinc-700 hover:bg-zinc-800/60 cursor-pointer transition-all flex flex-col items-center text-center gap-2 group">
+                        <div class="p-3 rounded-xl bg-zinc-950 text-white group-hover:scale-110 transition-transform border border-zinc-800">
+                            <i data-lucide="${cat.icon || 'box'}" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-xs font-bold text-white">${cat.name}</span>
+                    </div>
+                `;
+            });
+
+            const featGrid = document.getElementById('home-featured-grid');
+            featGrid.innerHTML = '';
+            state.products.filter(p => p.isPublished && p.isFeatured).forEach(p => {
+                featGrid.innerHTML += createProductCardHTML(p);
+            });
+            lucide.createIcons();
+        }
+
+        function createProductCardHTML(p) {
+            const cat = state.categories.find(c => c.id === p.categoryId);
+            const catName = cat ? cat.name : 'Hardware';
+            const formattedPrice = `${state.settings.currency}${p.price.toFixed(2)}`;
+            const prevPriceHTML = p.previousPrice ? `<span class="text-xs text-zinc-500 line-through">${state.settings.currency}${p.previousPrice.toFixed(2)}</span>` : '';
+
+            return `
+                <div class="rounded-xl bg-zinc-900 border border-zinc-800/80 hover:border-zinc-700 overflow-hidden flex flex-col justify-between group transition-all">
+                    <div class="relative aspect-video bg-zinc-950 overflow-hidden border-b border-zinc-800/60">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        <span class="absolute top-2 left-2 px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-black/80 text-white backdrop-blur-md border border-zinc-800">${catName}</span>
+                    </div>
+                    <div class="p-4 space-y-2 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-sm font-bold text-white line-clamp-1">${p.name}</h3>
+                            <p class="text-xs text-zinc-400 line-clamp-2 mt-1 leading-relaxed">${p.shortDescription}</p>
+                        </div>
+                        <div class="pt-3 border-t border-zinc-800/60 flex items-center justify-between">
+                            <div class="flex items-baseline gap-1.5">
+                                <span class="text-base font-extrabold text-white">${formattedPrice}</span>
+                                ${prevPriceHTML}
+                            </div>
+                            <button onclick="openProductDetailModal('${p.id}')" class="px-3 py-1.5 rounded-lg bg-white hover:bg-zinc-200 text-black font-bold text-xs transition-all flex items-center gap-1 shadow-sm">
+                                <span>Details</span>
+                                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderCatalog() {
+            const grid = document.getElementById('catalog-products-grid');
+            const emptyState = document.getElementById('catalog-empty-state');
+            const searchQuery = document.getElementById('catalog-search').value.toLowerCase();
+            const categoryFilter = document.getElementById('catalog-category-filter').value;
+            const sortBy = document.getElementById('catalog-sort').value;
+
+            const catSelect = document.getElementById('catalog-category-filter');
+            if (catSelect.options.length <= 1) {
+                state.categories.forEach(c => {
+                    catSelect.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+                });
+            }
+
+            let filtered = state.products.filter(p => p.isPublished);
+
+            if (searchQuery) {
+                filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery) || p.shortDescription.toLowerCase().includes(searchQuery));
+            }
+
+            if (categoryFilter !== 'ALL') {
+                filtered = filtered.filter(p => p.categoryId === categoryFilter);
+            }
+
+            if (sortBy === 'price-asc') filtered.sort((a, b) => a.price - b.price);
+            else if (sortBy === 'price-desc') filtered.sort((a, b) => b.price - a.price);
+            else if (sortBy === 'newest') filtered.reverse();
+
+            grid.innerHTML = '';
+            if (filtered.length === 0) {
+                emptyState.classList.remove('hidden');
+                grid.classList.add('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                grid.classList.remove('hidden');
+                filtered.forEach(p => {
+                    grid.innerHTML += createProductCardHTML(p);
+                });
+            }
+            lucide.createIcons();
+        }
+
+        function filterCatalogByCategory(catId) {
+            switchTab('catalog');
+            document.getElementById('catalog-category-filter').value = catId;
+            renderCatalog();
+        }
+
+        function resetCatalogFilters() {
+            document.getElementById('catalog-search').value = '';
+            document.getElementById('catalog-category-filter').value = 'ALL';
+            document.getElementById('catalog-sort').value = 'featured';
+            renderCatalog();
+        }
+
+        function openProductDetailModal(productId) {
+            if (!state.settings.isOpen && !state.isAdmin) {
+                document.getElementById('store-closed-overlay').classList.remove('hidden');
+                return;
+            }
+
+            const p = state.products.find(item => item.id === productId);
+            if (!p) return;
+
+            state.selectedProductForDetail = p;
+            state.orderQty = 1;
+            state.selectedDuration = p.durations ? p.durations[0] : null;
+
+            document.getElementById('detail-title').textContent = p.name;
+            document.getElementById('detail-description').textContent = p.shortDescription;
+            document.getElementById('detail-image-main').src = p.image;
+            document.getElementById('detail-category-name').textContent = (state.categories.find(c => c.id === p.categoryId) || {}).name || 'Electronics';
+
+            updateDetailPriceDisplay();
+            document.getElementById('modal-product-detail').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function updateDetailPriceDisplay() {
+            const p = state.selectedProductForDetail;
+            let currentPrice = p.price;
+            if (state.selectedDuration) currentPrice = state.selectedDuration.price;
+            document.getElementById('detail-price').textContent = `${state.settings.currency}${(currentPrice * state.orderQty).toFixed(2)}`;
+            document.getElementById('order-qty-display').textContent = state.orderQty;
+        }
+
+        function adjustOrderQty(delta) {
+            state.orderQty = Math.max(1, state.orderQty + delta);
+            updateDetailPriceDisplay();
+        }
+
+        function closeProductModal() {
+            document.getElementById('modal-product-detail').classList.add('hidden');
+        }
+
+        function executeWhatsAppOrder() {
+            const nameInput = document.getElementById('order-cust-name').value.trim();
+            const phoneInput = document.getElementById('order-cust-phone').value.trim();
+            const notesInput = document.getElementById('order-cust-notes').value.trim();
+
+            if (!nameInput || !phoneInput) {
+                showToast("Please enter your Full Name and Phone Number.", "error");
+                return;
+            }
+
+            const p = state.selectedProductForDetail;
+            const refCode = `#NX-${Math.floor(1000 + Math.random() * 9000)}`;
+            const unitPrice = state.selectedDuration ? state.selectedDuration.price : p.price;
+            const total = unitPrice * state.orderQty;
+
+            state.orders.unshift({
+                id: `ord-${Date.now()}`,
+                reference: refCode,
+                customerName: nameInput,
+                customerPhone: phoneInput,
+                productName: p.name,
+                variant: state.selectedDuration ? state.selectedDuration.name : 'Standard',
+                quantity: state.orderQty,
+                unitPrice: unitPrice,
+                total: total,
+                status: 'New',
+                createdAt: new Date().toISOString().replace('T', ' ').substring(0, 16),
+                notes: notesInput || 'None'
+            });
+
+            saveState();
+
+            const messageText = `Hello ${state.settings.storeName}! Order Ref: ${refCode}, Customer: ${nameInput}, Product: ${p.name}, Total: ${state.settings.currency}${total.toFixed(2)}`;
+            const waDeepLink = `https://wa.me/${state.settings.whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(messageText)}`;
+
+            closeProductModal();
+            showToast(`Order recorded! Redirecting to WhatsApp...`);
+            setTimeout(() => { window.open(waDeepLink, '_blank'); }, 800);
+        }
+
+        function renderAdminDashboard() {
+            document.getElementById('stat-total-products').textContent = state.products.length;
+            document.getElementById('stat-published-products').textContent = `${state.products.filter(p => p.isPublished).length} Published`;
+            document.getElementById('stat-total-orders').textContent = state.orders.length;
+            document.getElementById('stat-new-orders').textContent = `${state.orders.filter(o => o.status === 'New').length} Pending`;
+            document.getElementById('stat-out-stock').textContent = state.products.filter(p => p.stock <= 0).length;
+            document.getElementById('stat-total-revenue').textContent = `${state.settings.currency}${state.orders.filter(o => o.status === 'Confirmed' || o.status === 'Completed').reduce((sum, o) => sum + o.total, 0).toFixed(2)}`;
+            document.getElementById('admin-count-products').textContent = state.products.length;
+            document.getElementById('admin-count-orders').textContent = state.orders.length;
+
+            renderAdminRecentOrders();
+            renderAdminProducts();
+            renderAdminCategories();
+            renderAdminOrders();
+        }
+
+        function renderAdminRecentOrders() {
+            const tbody = document.getElementById('admin-recent-orders-tbody');
+            tbody.innerHTML = '';
+            state.orders.slice(0, 5).forEach(o => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="p-3 font-mono font-bold text-white">${o.reference}</td>
+                        <td class="p-3 font-medium text-white">${o.customerName}</td>
+                        <td class="p-3 text-zinc-400">${o.productName}</td>
+                        <td class="p-3 font-bold text-white">${state.settings.currency}${o.total.toFixed(2)}</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] bg-zinc-800 text-zinc-300">${o.status}</span></td>
+                        <td class="p-3 text-zinc-500">${o.createdAt}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function renderAdminProducts() {
+            const tbody = document.getElementById('admin-products-tbody');
+            tbody.innerHTML = '';
+            state.products.forEach(p => {
+                const cat = state.categories.find(c => c.id === p.categoryId);
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="p-3 flex items-center gap-3">
+                            <img src="${p.image}" class="w-8 h-8 rounded object-cover bg-zinc-950">
+                            <span class="font-bold text-white">${p.name}</span>
+                        </td>
+                        <td class="p-3 text-zinc-400">${cat ? cat.name : 'N/A'}</td>
+                        <td class="p-3 font-bold text-white">${state.settings.currency}${p.price.toFixed(2)}</td>
+                        <td class="p-3">${p.stock} in stock</td>
+                        <td class="p-3"><span class="text-emerald-400">${p.isPublished ? 'Published' : 'Draft'}</span></td>
+                        <td class="p-3 text-right space-x-2">
+                            <button onclick="editProduct('${p.id}')" class="p-1 text-zinc-400 hover:text-white"><i data-lucide="edit" class="w-4 h-4"></i></button>
+                            <button onclick="deleteProduct('${p.id}')" class="p-1 text-zinc-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+            lucide.createIcons();
+        }
+
+        function handleImageFileUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(uploadEvent) {
+                    document.getElementById('edit-prod-image').value = uploadEvent.target.result;
+                    showToast("Image loaded successfully!");
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function openProductModal(editId = null) {
+            document.getElementById('admin-product-form').reset();
+            const catSelect = document.getElementById('edit-prod-category');
+            catSelect.innerHTML = '';
+            state.categories.forEach(c => { catSelect.innerHTML += `<option value="${c.id}">${c.name}</option>`; });
+
+            if (editId) {
+                const p = state.products.find(item => item.id === editId);
+                document.getElementById('admin-product-modal-title').textContent = "Edit Product";
+                document.getElementById('edit-prod-id').value = p.id;
+                document.getElementById('edit-prod-name').value = p.name;
+                document.getElementById('edit-prod-category').value = p.categoryId;
+                document.getElementById('edit-prod-price').value = p.price;
+                document.getElementById('edit-prod-prev-price').value = p.previousPrice || '';
+                document.getElementById('edit-prod-stock').value = p.stock;
+                document.getElementById('edit-prod-image').value = p.image;
+                document.getElementById('edit-prod-type').value = p.type;
+                document.getElementById('edit-prod-desc').value = p.shortDescription;
+                document.getElementById('edit-prod-published').checked = p.isPublished;
+                document.getElementById('edit-prod-featured').checked = p.isFeatured;
+            } else {
+                document.getElementById('admin-product-modal-title').textContent = "Add New Product";
+                document.getElementById('edit-prod-id').value = '';
+            }
+            document.getElementById('modal-admin-product').classList.remove('hidden');
+        }
+
+        function closeAdminProductModal() {
+            document.getElementById('modal-admin-product').classList.add('hidden');
+        }
+
+        function saveAdminProduct(e) {
+            e.preventDefault();
+            const id = document.getElementById('edit-prod-id').value;
+            const name = document.getElementById('edit-prod-name').value;
+            const categoryId = document.getElementById('edit-prod-category').value;
+            const price = parseFloat(document.getElementById('edit-prod-price').value);
+            const previousPrice = parseFloat(document.getElementById('edit-prod-prev-price').value) || null;
+            const stock = parseInt(document.getElementById('edit-prod-stock').value);
+            let image = document.getElementById('edit-prod-image').value.trim() || 'https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=600&q=80';
+            const type = document.getElementById('edit-prod-type').value;
+            const shortDescription = document.getElementById('edit-prod-desc').value;
+            const isPublished = document.getElementById('edit-prod-published').checked;
+            const isFeatured = document.getElementById('edit-prod-featured').checked;
+
+            if (id) {
+                const p = state.products.find(item => item.id === id);
+                Object.assign(p, { name, categoryId, price, previousPrice, stock, image, type, shortDescription, isPublished, isFeatured });
+            } else {
+                state.products.unshift({ id: `prod-${Date.now()}`, name, categoryId, price, previousPrice, stock, image, type, shortDescription, isPublished, isFeatured });
+            }
+
+            saveState();
+            closeAdminProductModal();
+            renderAdminDashboard();
+            renderHomePage();
+            renderCatalog();
+            showToast("Product saved successfully.");
+        }
+
+        function editProduct(id) { openProductModal(id); }
+        function deleteProduct(id) {
+            if (confirm("Delete this product?")) {
+                state.products = state.products.filter(p => p.id !== id);
+                saveState();
+                renderAdminDashboard();
+                renderHomePage();
+                renderCatalog();
+                showToast("Product deleted.");
+            }
+        }
+
+        function renderAdminCategories() {
+            const grid = document.getElementById('admin-categories-grid');
+            grid.innerHTML = '';
+            state.categories.forEach(cat => {
+                grid.innerHTML += `
+                    <div class="p-4 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2.5 rounded-lg bg-zinc-950 border border-zinc-800 text-white"><i data-lucide="${cat.icon || 'tag'}" class="w-5 h-5"></i></div>
+                            <div><h4 class="font-bold text-white text-xs">${cat.name}</h4></div>
+                        </div>
+                    </div>
+                `;
+            });
+            lucide.createIcons();
+        }
+
+        function renderAdminOrders() {
+            const tbody = document.getElementById('admin-orders-tbody');
+            tbody.innerHTML = '';
+            state.orders.forEach(o => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="p-3 font-mono font-bold text-white">${o.reference}</td>
+                        <td class="p-3"><span class="font-bold text-white">${o.customerName}</span><br><span class="text-[10px] text-zinc-500">${o.customerPhone}</span></td>
+                        <td class="p-3">${o.productName} (x${o.quantity})</td>
+                        <td class="p-3 font-bold text-white">${state.settings.currency}${o.total.toFixed(2)}</td>
+                        <td class="p-3">
+                            <select onchange="updateOrderStatus('${o.id}', this.value)" class="bg-zinc-950 border border-zinc-800 rounded px-2 py-1 text-xs text-white">
+                                <option value="New" ${o.status === 'New' ? 'selected' : ''}>New</option>
+                                <option value="Confirmed" ${o.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+                                <option value="Completed" ${o.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                                <option value="Cancelled" ${o.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                            </select>
+                        </td>
+                        <td class="p-3 text-zinc-500 text-[10px]">${o.createdAt}</td>
+                        <td class="p-3 text-right"><button onclick="deleteOrder('${o.id}')" class="p-1 text-rose-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td>
+                    </tr>
+                `;
+            });
+            lucide.createIcons();
+        }
+
+        function updateOrderStatus(orderId, newStatus) {
+            const o = state.orders.find(item => item.id === orderId);
+            if (o) { o.status = newStatus; saveState(); renderAdminDashboard(); showToast("Order status updated."); }
+        }
+
+        function deleteOrder(orderId) {
+            if (confirm("Delete order?")) {
+                state.orders = state.orders.filter(o => o.id !== orderId);
+                saveState();
+                renderAdminDashboard();
+                showToast("Order deleted.");
+            }
+        }
+
+        function populateSettingsForm() {
+            document.getElementById('setting-store-name').value = state.settings.storeName;
+            document.getElementById('setting-currency').value = state.settings.currency;
+            document.getElementById('setting-whatsapp-number').value = state.settings.whatsappNumber;
+            document.getElementById('setting-address').value = state.settings.address;
+            document.getElementById('setting-hours').value = state.settings.hours;
+        }
+
+        // Hada howa l'fix dyal ism site: Kantsajlo state.settings o kandbro updateStoreAvailabilityUI() for instant update!
+        function saveStoreSettings(e) {
+            e.preventDefault();
+            state.settings.storeName = document.getElementById('setting-store-name').value;
+            state.settings.currency = document.getElementById('setting-currency').value;
+            state.settings.whatsappNumber = document.getElementById('setting-whatsapp-number').value;
+            state.settings.address = document.getElementById('setting-address').value;
+            state.settings.hours = document.getElementById('setting-hours').value;
+
+            saveState(); // كيصيفط الإعدادات لـ LocalStorage وكيححدث الواجهة فالحين
+            renderHomePage();
+            renderCatalog();
+            showToast("Store configuration saved & updated instantly!");
+        }
+
+        function toggleSearchModal() {
+            const modal = document.getElementById('modal-search');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) document.getElementById('quick-search-input').focus();
+        }
+
+        function handleQuickSearch() {
+            const query = document.getElementById('quick-search-input').value.toLowerCase();
+            const resultsContainer = document.getElementById('quick-search-results');
+            if (!query) { resultsContainer.innerHTML = '<p class="text-xs text-zinc-500 text-center py-4">Start typing...</p>'; return; }
+
+            const matches = state.products.filter(p => p.isPublished && p.name.toLowerCase().includes(query));
+            resultsContainer.innerHTML = matches.length === 0 ? '<p class="text-xs text-zinc-500 text-center py-4">No matches found.</p>' : '';
+            matches.forEach(p => {
+                resultsContainer.innerHTML += `
+                    <div onclick="openProductDetailModal('${p.id}'); toggleSearchModal()" class="p-2.5 rounded-lg hover:bg-zinc-800 cursor-pointer flex items-center justify-between transition-colors">
+                        <div class="flex items-center gap-3">
+                            <img src="${p.image}" class="w-8 h-8 rounded object-cover">
+                            <h4 class="text-xs font-bold text-white">${p.name}</h4>
+                        </div>
+                        <span class="text-xs font-bold text-white">${state.settings.currency}${p.price.toFixed(2)}</span>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+
+        function showToast(message, type = "success") {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `p-3 rounded-xl border text-xs font-bold shadow-2xl flex items-center gap-2 transition-all transform translate-y-2 opacity-0 pointer-events-auto ${type === 'error' ? 'bg-rose-950 text-rose-200 border-rose-800' : 'bg-zinc-900 text-white border-zinc-700'}`;
+            toast.innerHTML = `<i data-lucide="${type === 'error' ? 'alert-circle' : 'check-circle-2'}" class="w-4 h-4 text-white"></i><span>${message}</span>`;
+            container.appendChild(toast);
+            lucide.createIcons();
+            setTimeout(() => { toast.classList.remove('translate-y-2', 'opacity-0'); }, 10);
+            setTimeout(() => { toast.classList.add('opacity-0'); setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
